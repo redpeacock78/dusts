@@ -1,0 +1,45 @@
+#! /bin/sh
+exec ruby -S -x "$0" "$@"
+#! ruby
+
+require 'thor'
+
+#version number.
+Version = '0.0.1'
+
+#rwby's characters name
+Char = {
+        'rwby' => "Ruby Rose\nWeiss Schnee\nBlake Belladonna\nYang Xiao Long",
+	'jnpr' => "Jaune Arc\nNora Valkyrie\nPyrrha Nikos\nLie Ren"
+       }
+
+
+class Dusts < Thor
+  default_command :help
+
+  #Print version
+  map %w[-v --version] => :print_version
+  desc '-v, --version', 'Print version.'
+  def print_version
+    puts "Dusts is v#{Version}"
+  end
+  
+  #Print Character
+  desc 'char [OPTION]', 'Show Character Name.'
+  option :rwby, :aliases => '-r', :desc => "Show RWBY members name."
+  option :jnpr, :aliases => '-j', :desc => "Show JNPR members name."
+  def char
+    if options[:rwby] then
+      puts Char['rwby']
+    elsif options[:jnpr] then
+      puts Char['jnpr']
+    else
+      puts Char['rwby']
+      puts Char['jnpr']
+    end
+  end
+
+end
+
+Dusts.start(ARGV)
+
