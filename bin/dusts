@@ -3,14 +3,18 @@ exec ruby -S -x "$0" "$@"
 #! ruby
 
 require 'thor'
+require 'awesome_print'
 
 #version number.
 Version = '0.0.1'
 
 #rwby's characters name
 Char = {
-        'rwby' => "Ruby Rose\nWeiss Schnee\nBlake Belladonna\nYang Xiao Long",
-	'jnpr' => "Jaune Arc\nNora Valkyrie\nPyrrha Nikos\nLie Ren"
+        all: {
+              rwby: "Ruby Rose\nWeiss Schnee\nBlake Belladonna\nYang Xiao Long",
+              jnpr: "Jaune Arc\nNora Valkyrie\nPyrrha Nikos\nLie Ren",
+              cfvy: "Coco Adel\nFox Alistair\nVelvet Scarlatina\nYatsuhashi Daichi"
+             }
        }
 
 
@@ -23,23 +27,24 @@ class Dusts < Thor
   def print_version
     puts "Dusts is v#{Version}"
   end
-  
-  #Print Character
+
+  #Show Character
   desc 'char [OPTION]', 'Show Character Name.'
   option :rwby, :aliases => '-r', :desc => "Show RWBY members name."
   option :jnpr, :aliases => '-j', :desc => "Show JNPR members name."
+  option :cfvy, :aliases => '-c', :desc => "Show CFVY members name."
   def char
     if options[:rwby] then
-      puts Char['rwby']
+      puts Char[:all][:rwby]
     elsif options[:jnpr] then
-      puts Char['jnpr']
+      puts Char[:all][:jnpr]
+    elsif options[:cfvy] then
+      puts Char[:all][:cfvy]
     else
-      puts Char['rwby']
-      puts Char['jnpr']
+      puts Char[:all]
     end
   end
 
 end
 
 Dusts.start(ARGV)
-
